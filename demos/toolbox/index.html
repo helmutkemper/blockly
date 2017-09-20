@@ -6,6 +6,7 @@
   <script src="../../blockly_compressed.js"></script>
   <script src="../../blocks_compressed.js"></script>
   <script src="../../msg/js/en.js"></script>
+  <script src="minimap.js"></script>
   <style>
     body {
       background-color: #fff;
@@ -15,329 +16,487 @@
       font-weight: normal;
       font-size: 140%;
     }
+    .minimap{
+      position:absolute;
+    }
   </style>
 </head>
 <body>
-  <h1><a href="https://developers.google.com/blockly/">Blockly</a> &gt;
-    <a href="../_index.html">Demos</a> &gt; Toolbox</h1>
 
-  <p>This is a demo of a complex category structure for the toolbox.</p>
+<table width="100%">
+  <tr>
+    <td>
+      <div id="blocklyDiv" style="height: 480px; width: 900px;"></div>
+    </td>
+    <td>
+      <div id="mapDiv" style="height: 480px; width: 200px;"></div>
+    </td>
+  </tr>
+</table>
+  <!--div id="blocklyDiv" style="height: 600px; width: 800px;"></div-->
 
-  <p>&rarr; More info on the <a href="https://developers.google.com/blockly/guides/configure/web/toolbox">Toolbox</a>&hellip;</p>
-
-  <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
-
-  <xml id="toolbox" style="display: none">
-    <category name="Logic">
-      <category name="If">
-        <block type="controls_if"></block>
-        <block type="controls_if">
-          <mutation else="1"></mutation>
-        </block>
-        <block type="controls_if">
-          <mutation elseif="1" else="1"></mutation>
-        </block>
-      </category>
-      <category name="Boolean">
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_boolean"></block>
-        <block type="logic_null"></block>
-        <block type="logic_ternary"></block>
-      </category>
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+    <category name="api">
+      <block type="inputquerystring1input"></block>
+      <block type="typequerystring">
+        <field name="type">integer</field>
+        <field name="NAME">id</field>
+      </block>
+      <block type="typemodulenamestring">
+        <field name="valueModuleNameString">module_name</field>
+      </block>
     </category>
-    <category name="Loops">
-      <block type="controls_repeat_ext">
-        <value name="TIMES">
-          <block type="math_number">
-            <field name="NUM">10</field>
-          </block>
-        </value>
+    <category name="query">
+      <block type="fieldinput">
+        <field name="fieldName">tag</field>
+        <field name="nameType">fixValue</field>
       </block>
-      <block type="controls_whileUntil"></block>
-      <block type="controls_for">
-        <field name="VAR">i</field>
-        <value name="FROM">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <value name="TO">
-          <block type="math_number">
-            <field name="NUM">10</field>
-          </block>
-        </value>
-        <value name="BY">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
+      <block type="typetagname">
+        <field name="valueTagName">name</field>
       </block>
-      <block type="controls_forEach"></block>
-      <block type="controls_flow_statements"></block>
+      <block type="typetaghighway">
+        <field name="NAME">primary</field>
+      </block>
+      <block type="typetagplace">
+        <field name="NAME">square</field>
+      </block>
+      <block type="typefield">
+        <field name="id">id</field>
+      </block>
+      <block type="typefieldloc">
+        <field name="lng">lng</field>
+        <field name="lat">lat</field>
+      </block>
+      <block type="typefiedinput"></block>
+      <block type="typequeryandinput"></block>
     </category>
-    <category name="Math">
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-      <block type="math_single"></block>
-      <block type="math_trig"></block>
-      <block type="math_constant"></block>
-      <block type="math_number_property"></block>
-      <block type="math_round"></block>
-      <block type="math_on_list"></block>
-      <block type="math_modulo"></block>
-      <block type="math_constrain">
-        <value name="LOW">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <value name="HIGH">
-          <block type="math_number">
-            <field name="NUM">100</field>
-          </block>
-        </value>
-      </block>
-      <block type="math_random_int">
-        <value name="FROM">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <value name="TO">
-          <block type="math_number">
-            <field name="NUM">100</field>
-          </block>
-        </value>
-      </block>
-      <block type="math_random_float"></block>
+    <category name="geo type">
+      <block type="elementpoint"></block>
     </category>
-    <category name="Lists">
-      <block type="lists_create_empty"></block>
-      <block type="lists_create_with"></block>
-      <block type="lists_repeat">
-        <value name="NUM">
-          <block type="math_number">
-            <field name="NUM">5</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_length"></block>
-      <block type="lists_isEmpty"></block>
-      <block type="lists_indexOf"></block>
-      <block type="lists_getIndex"></block>
-      <block type="lists_setIndex"></block>
+    <category name="output">
+      <block type="outputgeojson"></block>
+      <block type="outputjson"></block>
     </category>
-    <category name="Variables" custom="VARIABLE"></category>
-    <category name="Functions" custom="PROCEDURE"></category>
     <sep></sep>
-    <category name="Library" expanded="true">
-      <category name="Randomize">
-        <block type="procedures_defnoreturn">
-          <mutation>
-            <arg name="list"></arg>
-          </mutation>
-          <field name="NAME">randomize</field>
-          <statement name="STACK">
-            <block type="controls_for" inline="true">
-              <field name="VAR">x</field>
-              <value name="FROM">
-                <block type="math_number">
-                  <field name="NUM">1</field>
-                </block>
-              </value>
-              <value name="TO">
-                <block type="lists_length" inline="false">
-                  <value name="VALUE">
-                    <block type="variables_get">
-                      <field name="VAR">list</field>
-                    </block>
-                  </value>
-                </block>
-              </value>
-              <value name="BY">
-                <block type="math_number">
-                  <field name="NUM">1</field>
-                </block>
-              </value>
-              <statement name="DO">
-                <block type="variables_set" inline="false">
-                  <field name="VAR">y</field>
-                  <value name="VALUE">
-                    <block type="math_random_int" inline="true">
-                      <value name="FROM">
-                        <block type="math_number">
-                          <field name="NUM">1</field>
-                        </block>
-                      </value>
-                      <value name="TO">
-                        <block type="lists_length" inline="false">
-                          <value name="VALUE">
-                            <block type="variables_get">
-                              <field name="VAR">list</field>
-                            </block>
-                          </value>
-                        </block>
-                      </value>
-                    </block>
-                  </value>
-                  <next>
-                    <block type="variables_set" inline="false">
-                      <field name="VAR">temp</field>
-                      <value name="VALUE">
-                        <block type="lists_getIndex" inline="true">
-                          <mutation statement="false" at="true"></mutation>
-                          <field name="MODE">GET</field>
-                          <field name="WHERE">FROM_START</field>
-                          <value name="AT">
-                            <block type="variables_get">
-                              <field name="VAR">y</field>
-                            </block>
-                          </value>
-                          <value name="VALUE">
-                            <block type="variables_get">
-                              <field name="VAR">list</field>
-                            </block>
-                          </value>
-                        </block>
-                      </value>
-                      <next>
-                        <block type="lists_setIndex" inline="false">
-                          <value name="AT">
-                            <block type="variables_get">
-                              <field name="VAR">y</field>
-                            </block>
-                          </value>
-                          <value name="LIST">
-                            <block type="variables_get">
-                              <field name="VAR">list</field>
-                            </block>
-                          </value>
-                          <value name="TO">
-                            <block type="lists_getIndex" inline="true">
-                              <mutation statement="false" at="true"></mutation>
-                              <field name="MODE">GET</field>
-                              <field name="WHERE">FROM_START</field>
-                              <value name="AT">
-                                <block type="variables_get">
-                                  <field name="VAR">x</field>
-                                </block>
-                              </value>
-                              <value name="VALUE">
-                                <block type="variables_get">
-                                  <field name="VAR">list</field>
-                                </block>
-                              </value>
-                            </block>
-                          </value>
-                          <next>
-                            <block type="lists_setIndex" inline="false">
-                              <value name="AT">
-                                <block type="variables_get">
-                                  <field name="VAR">x</field>
-                                </block>
-                              </value>
-                              <value name="LIST">
-                                <block type="variables_get">
-                                  <field name="VAR">list</field>
-                                </block>
-                              </value>
-                              <value name="TO">
-                                <block type="variables_get">
-                                  <field name="VAR">temp</field>
-                                </block>
-                              </value>
-                            </block>
-                          </next>
-                        </block>
-                      </next>
-                    </block>
-                  </next>
-                </block>
-              </statement>
-            </block>
-          </statement>
-        </block>
-      </category>
-      <category name="Jabberwocky">
-        <block type="text_print">
-          <value name="TEXT">
-            <block type="text">
-              <field name="TEXT">'Twas brillig, and the slithy toves</field>
-            </block>
-          </value>
-          <next>
-            <block type="text_print">
-              <value name="TEXT">
-                <block type="text">
-                  <field name="TEXT">  Did gyre and gimble in the wabe:</field>
-                </block>
-              </value>
-              <next>
-                <block type="text_print">
-                  <value name="TEXT">
-                    <block type="text">
-                      <field name="TEXT">All mimsy were the borogroves,</field>
-                    </block>
-                  </value>
-                  <next>
-                    <block type="text_print">
-                      <value name="TEXT">
-                        <block type="text">
-                          <field name="TEXT">  And the mome raths outgrabe.</field>
-                        </block>
-                      </value>
-                    </block>
-                  </next>
-                </block>
-              </next>
-            </block>
-          </next>
-        </block>
-        <block type="text_print">
-          <value name="TEXT">
-            <block type="text">
-              <field name="TEXT">"Beware the Jabberwock, my son!</field>
-            </block>
-          </value>
-          <next>
-            <block type="text_print">
-              <value name="TEXT">
-                <block type="text">
-                  <field name="TEXT">  The jaws that bite, the claws that catch!</field>
-                </block>
-              </value>
-              <next>
-                <block type="text_print">
-                  <value name="TEXT">
-                    <block type="text">
-                      <field name="TEXT">Beware the Jubjub bird, and shun</field>
-                    </block>
-                  </value>
-                  <next>
-                    <block type="text_print">
-                      <value name="TEXT">
-                        <block type="text">
-                          <field name="TEXT">  The frumious Bandersnatch!"</field>
-                        </block>
-                      </value>
-                    </block>
-                  </next>
-                </block>
-              </next>
-            </block>
-          </next>
-        </block>
-      </category>
+    <category name="example point">
+      <block type="inputquerystring1input">
+        <value name="moduleNameString">
+          <block type="typemodulenamestring">
+            <field name="valueModuleNameString">point</field>
+            <value name="NAME">
+              <block type="typequerystring">
+                <field name="type">integer</field>
+                <field name="NAME">id</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="NAME">
+          <block type="typemethod"></block>
+        </statement>
+        <statement name="inputFieldInput">
+          <block type="typefiedinput">
+            <value name="NAME">
+              <block type="typefield">
+                <field name="id">id</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <statement name="typeElementInput">
+          <block type="elementpoint"></block>
+        </statement>
+        <statement name="typeOutputInput">
+          <block type="outputgeojson"></block>
+        </statement>
+      </block>
     </category>
   </xml>
 
-  <script>
-    var workspace = Blockly.inject('blocklyDiv',
-        {media: '../../media/',
-         toolbox: document.getElementById('toolbox')});
-  </script>
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+    <variables></variables>
+    <block type="inputquerystring1input" id="`47]SVt0Pj%H,PH,}ALI" x="13" y="12"></block>
+  </xml>
 
+  <script>
+      /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
+      var toolbox = document.getElementById("toolbox");
+
+      var options = {
+          toolbox : toolbox,
+          collapse : true,
+          comments : true,
+          disable : true,
+          maxBlocks : Infinity,
+          trashcan : true,
+          horizontalLayout : false,
+          toolboxPosition : 'start',
+          css : true,
+          media: '../../media/',
+          rtl : false,
+          scrollbars : true,
+          sounds : false,
+          oneBasedIndex : true
+      };
+
+      /* Inject your workspace */
+      var workspace = Blockly.inject('blocklyDiv', options);
+
+      /* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
+
+      /* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
+      var workspaceBlocks = document.getElementById("workspaceBlocks");
+
+      Blockly.Blocks['typequerystring'] = {
+          init: function() {
+              this.appendValueInput("valueQueryString")
+                  .setCheck(["typeQueryString", "typeModuleNameStringValueInput"])
+                  .appendField("type:")
+                  .appendField(new Blockly.FieldDropdown([["int","integer"], ["float","float point"], ["string","text"], ["nearby","near by coordinates"], ["regex","regular expression"]]), "type")
+                  .appendField("name (letters only):")
+                  .appendField(new Blockly.FieldTextInput("id"), "NAME")
+                  .appendField("/");
+              this.setInputsInline(false);
+              this.setOutput(true, "typeQueryString");
+              this.setColour(120);
+              this.setTooltip("typeQueryString");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['inputquerystring1input'] = {
+          init: function() {
+              this.appendValueInput("moduleNameString")
+                  .setCheck("typeModuleNameString")
+                  .appendField("api.gosm.io/");
+              this.appendStatementInput("NAME")
+                  .setCheck(null)
+                  .appendField("method:");
+              this.appendStatementInput("inputFieldInput")
+                  .setCheck("fieldInput")
+                  .setAlign(Blockly.ALIGN_RIGHT)
+                  .appendField("query:");
+              this.appendStatementInput("typeElementInput")
+                  .setCheck(null)
+                  .setAlign(Blockly.ALIGN_RIGHT)
+                  .appendField("element:");
+              this.appendStatementInput("typeOutputInput")
+                  .setCheck(null)
+                  .setAlign(Blockly.ALIGN_RIGHT)
+                  .appendField("output:");
+              this.setColour(230);
+              this.setTooltip("define query string");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['fieldinput'] = {
+          init: function() {
+              this.appendValueInput("NAME")
+                  .setCheck(null)
+                  .appendField("field:")
+                  .appendField(new Blockly.FieldDropdown([["tag","tag"], ["id","id"], ["nearBy","nearBy"]]), "fieldName")
+                  .appendField("type:")
+                  .appendField(new Blockly.FieldDropdown([["fix value","fixValue"], ["query string value","queryStringValue"]]), "nameType");
+              this.setPreviousStatement(true, null);
+              this.setNextStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typemodulenamestring'] = {
+          init: function() {
+              this.appendValueInput("NAME")
+                  .setCheck(["typeQueryString", "typeModuleNameString"])
+                  .appendField(new Blockly.FieldTextInput("module_name"), "valueModuleNameString")
+                  .appendField("/");
+              this.setOutput(true, ["typeModuleNameString", "typeQueryString"]);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typetagname'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("tag.name:")
+                  .appendField(new Blockly.FieldTextInput("name"), "valueTagName");
+              this.setOutput(true, "typeTagName");
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typetaghighway'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("tag.highway:")
+                  .appendField(new Blockly.FieldDropdown([["primary","primary"], ["secondary","secondary"], ["residential","residential"]]), "NAME");
+              this.setOutput(true, "typeTag");
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typetagplace'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("ta.place")
+                  .appendField(new Blockly.FieldDropdown([["square","square"], ["neighbourhood","neighbourhood"], ["suburb","suburb"], ["farm","farm"], ["village","village"], ["locality","locality"], ["hamlet","hamlet"]]), "NAME");
+              this.setOutput(true, "typeTag");
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typefield'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("id:")
+                  .appendField(new Blockly.FieldTextInput("id"), "id");
+              this.setOutput(true, "typeField");
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typefieldloc'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("lng:")
+                  .appendField(new Blockly.FieldTextInput("lng"), "lng")
+                  .appendField("lat:")
+                  .appendField(new Blockly.FieldTextInput("lat"), "lat");
+              this.setOutput(true, "typeField");
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typefiedinput'] = {
+          init: function() {
+              this.appendValueInput("NAME")
+                  .setCheck("typeField")
+                  .appendField("query:");
+              this.setInputsInline(false);
+              this.setPreviousStatement(true, null);
+              this.setNextStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typequeryandinput'] = {
+          init: function() {
+              this.appendValueInput("NAME1")
+                  .setCheck(["typeField", "typeTag"])
+                  .appendField("$and:");
+              this.appendValueInput("NAME2")
+                  .setCheck(["typeField", "typeTag"]);
+              this.setInputsInline(false);
+              this.setPreviousStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['elementpoint'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("point");
+              this.setPreviousStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['outputgeojson'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("geoJSon");
+              this.setPreviousStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['outputjson'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("JSon");
+              this.setPreviousStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.Blocks['typemethod'] = {
+          init: function() {
+              this.appendDummyInput()
+                  .appendField("_GET");
+              this.setPreviousStatement(true, null);
+              this.setColour(230);
+              this.setTooltip("");
+              this.setHelpUrl("");
+          }
+      };
+
+      Blockly.JavaScript['typequerystring'] = function(block) {
+          var dropdown_type = block.getFieldValue('type');
+          var text_name = block.getFieldValue('NAME');
+          var value_valuequerystring = Blockly.JavaScript.valueToCode(block, 'valueQueryString', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['inputquerystring1input'] = function(block) {
+          var value_modulenamestring = Blockly.JavaScript.valueToCode(block, 'moduleNameString', Blockly.JavaScript.ORDER_ATOMIC);
+          var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+          var statements_inputfieldinput = Blockly.JavaScript.statementToCode(block, 'inputFieldInput');
+          var statements_typeelementinput = Blockly.JavaScript.statementToCode(block, 'typeElementInput');
+          var statements_typeoutputinput = Blockly.JavaScript.statementToCode(block, 'typeOutputInput');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['fieldinput'] = function(block) {
+          var dropdown_fieldname = block.getFieldValue('fieldName');
+          var dropdown_nametype = block.getFieldValue('nameType');
+          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typemodulenamestring'] = function(block) {
+          var text_valuemodulenamestring = block.getFieldValue('valueModuleNameString');
+          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetagname'] = function(block) {
+          var text_valuetagname = block.getFieldValue('valueTagName');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetaghighway'] = function(block) {
+          var dropdown_name = block.getFieldValue('NAME');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetagplace'] = function(block) {
+          var dropdown_name = block.getFieldValue('NAME');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefield'] = function(block) {
+          var text_id = block.getFieldValue('id');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefieldloc'] = function(block) {
+          var text_lng = block.getFieldValue('lng');
+          var text_lat = block.getFieldValue('lat');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefiedinput'] = function(block) {
+          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typequeryandinput'] = function(block) {
+          var value_name1 = Blockly.JavaScript.valueToCode(block, 'NAME1', Blockly.JavaScript.ORDER_ATOMIC);
+          var value_name2 = Blockly.JavaScript.valueToCode(block, 'NAME2', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['elementpoint'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['outputgeojson'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['outputjson'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typemethod'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      /* Load blocks to workspace. */
+      Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
+
+
+
+
+
+
+
+
+      // Inject workspace for minimap.
+      var minimapWorkspace = Blockly.inject('mapDiv',
+          {media: '../../media/',
+              readOnly: true,
+              zoom:
+                  {controls: false,
+                      wheel: true,
+                      startScale: 0.1, //you can change this accorting to your needs.
+                      maxScale: 0.1,
+                      minScale: 0.01
+                  }});
+
+      // Initilizing the minimap.
+      Minimap.init(masterWorkspace,minimapWorkspace);
+  </script>
 </body>
 </html>
