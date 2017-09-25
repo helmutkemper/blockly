@@ -6,6 +6,9 @@
   <script src="../../blockly_compressed.js"></script>
   <script src="../../blocks_compressed.js"></script>
   <script src="../../msg/js/en.js"></script>
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="../../msg/js/en.js"></script>
   <script src="minimap.js"></script>
   <style>
     body {
@@ -17,7 +20,14 @@
       font-size: 140%;
     }
     .minimap{
-      position:absolute;
+        position:absolute;
+    }
+    .mapDragger{
+        cursor: move;
+        fill:rgb(0,0,255);
+        stroke-width:0.5;
+        stroke:rgb(0,0,0);
+        fill-opacity:0.1;
     }
   </style>
 </head>
@@ -141,12 +151,17 @@
 
       /* Inject your workspace */
       var workspace = Blockly.inject('blocklyDiv', options);
+      function showCode() {
+          //var workspace = Blockly.JavaScript.getBlockById('blocklyDiv');
+          // Generate JavaScript code and display it.
+          Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+          var code = Blockly.JavaScript.workspaceToCode(workspace);
+          alert(code);
+      }
 
       /* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
 
       /* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
-      var workspaceBlocks = document.getElementById("workspaceBlocks");
-
       Blockly.Blocks['typequerystring'] = {
           init: function() {
               this.appendValueInput("valueQueryString")
@@ -354,135 +369,6 @@
           }
       };
 
-      Blockly.JavaScript['typequerystring'] = function(block) {
-          var dropdown_type = block.getFieldValue('type');
-          var text_name = block.getFieldValue('NAME');
-          var value_valuequerystring = Blockly.JavaScript.valueToCode(block, 'valueQueryString', Blockly.JavaScript.ORDER_ATOMIC);
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['inputquerystring1input'] = function(block) {
-          var value_modulenamestring = Blockly.JavaScript.valueToCode(block, 'moduleNameString', Blockly.JavaScript.ORDER_ATOMIC);
-          var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-          var statements_inputfieldinput = Blockly.JavaScript.statementToCode(block, 'inputFieldInput');
-          var statements_typeelementinput = Blockly.JavaScript.statementToCode(block, 'typeElementInput');
-          var statements_typeoutputinput = Blockly.JavaScript.statementToCode(block, 'typeOutputInput');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['fieldinput'] = function(block) {
-          var dropdown_fieldname = block.getFieldValue('fieldName');
-          var dropdown_nametype = block.getFieldValue('nameType');
-          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['typemodulenamestring'] = function(block) {
-          var text_valuemodulenamestring = block.getFieldValue('valueModuleNameString');
-          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typetagname'] = function(block) {
-          var text_valuetagname = block.getFieldValue('valueTagName');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typetaghighway'] = function(block) {
-          var dropdown_name = block.getFieldValue('NAME');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typetagplace'] = function(block) {
-          var dropdown_name = block.getFieldValue('NAME');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typefield'] = function(block) {
-          var text_id = block.getFieldValue('id');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typefieldloc'] = function(block) {
-          var text_lng = block.getFieldValue('lng');
-          var text_lat = block.getFieldValue('lat');
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...';
-          // TODO: Change ORDER_NONE to the correct strength.
-          return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.JavaScript['typefiedinput'] = function(block) {
-          var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['typequeryandinput'] = function(block) {
-          var value_name1 = Blockly.JavaScript.valueToCode(block, 'NAME1', Blockly.JavaScript.ORDER_ATOMIC);
-          var value_name2 = Blockly.JavaScript.valueToCode(block, 'NAME2', Blockly.JavaScript.ORDER_ATOMIC);
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['elementpoint'] = function(block) {
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['outputgeojson'] = function(block) {
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['outputjson'] = function(block) {
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      Blockly.JavaScript['typemethod'] = function(block) {
-          // TODO: Assemble JavaScript into code variable.
-          var code = '...;\n';
-          return code;
-      };
-
-      /* Load blocks to workspace. */
-      Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
-
-
-
-
-
-
-
-
       // Inject workspace for minimap.
       var minimapWorkspace = Blockly.inject('mapDiv',
           {media: '../../media/',
@@ -496,7 +382,10 @@
                   }});
 
       // Initilizing the minimap.
-      Minimap.init(masterWorkspace,minimapWorkspace);
+      Minimap.init(workspace,minimapWorkspace);
+
+
   </script>
+<button onclick="showCode()">Show JavaScript</button>
 </body>
 </html>
