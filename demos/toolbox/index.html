@@ -36,97 +36,61 @@
 <table width="100%">
   <tr>
     <td>
-      <div id="blocklyDiv" style="height: 480px; width: 900px;"></div>
+      <div id="blocklyDiv" style="height: 480px; width: 550px;"></div>
     </td>
     <td>
-      <div id="mapDiv" style="height: 480px; width: 200px;"></div>
+        &nbsp;&nbsp;<input type="text" style="width: 520px;">
+        <iframe src="http://localhost:8083/?id=273316" style="height: 480px; width: 550px; border: 0px;" ></iframe>
     </td>
+    <!--td>
+      <div id="mapDiv" style="height: 480px; width: 200px;"></div>
+    </td-->
   </tr>
 </table>
   <!--div id="blocklyDiv" style="height: 600px; width: 800px;"></div-->
 
-  <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
-    <category name="api">
-      <block type="inputquerystring1input"></block>
-      <block type="typequerystring">
-        <field name="type">integer</field>
-        <field name="NAME">id</field>
-      </block>
-      <block type="typemodulenamestring">
-        <field name="valueModuleNameString">module_name</field>
-      </block>
-    </category>
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="query">
-      <block type="fieldinput">
-        <field name="fieldName">tag</field>
-        <field name="nameType">fixValue</field>
-      </block>
-      <block type="typetagname">
-        <field name="valueTagName">name</field>
-      </block>
-      <block type="typetaghighway">
-        <field name="NAME">primary</field>
-      </block>
-      <block type="typetagplace">
-        <field name="NAME">square</field>
-      </block>
-      <block type="typefield">
-        <field name="id">id</field>
-      </block>
-      <block type="typefieldloc">
-        <field name="lng">lng</field>
-        <field name="lat">lat</field>
-      </block>
-      <block type="typefiedinput"></block>
-      <block type="typequeryandinput"></block>
+        <block type="typequerystring">
+            <field name="type">integer</field>
+            <field name="input_id">id</field>
+        </block>
+        <block type="inputquerystring1input"></block>
+        <block type="fieldinput">
+            <field name="fieldName">tag</field>
+            <field name="nameType">fixValue</field>
+        </block>
+        <block type="typemethod"></block>
+        <block type="outputgeojson"></block>
+        <block type="elementpoint"></block>
+        <block type="typetagname">
+            <field name="valueTagName">name</field>
+        </block>
+        <block type="typequeryandinput"></block>
+        <block type="typemodulenamestring">
+            <field name="valueModuleNameString">module_name</field>
+        </block>
+        <block type="typetaghighway">
+            <field name="tag_highway_type">primary</field>
+        </block>
+        <block type="outputjson"></block>
+        <block type="typetagplace">
+            <field name="tag_place_name">square</field>
+        </block>
+        <block type="typefield">
+            <field name="id">id</field>
+        </block>
+        <block type="typefiedinput"></block>
+        <block type="typefieldloc">
+            <field name="lng">lng</field>
+            <field name="lat">lat</field>
+        </block>
     </category>
-    <category name="geo type">
-      <block type="elementpoint"></block>
-    </category>
-    <category name="output">
-      <block type="outputgeojson"></block>
-      <block type="outputjson"></block>
-    </category>
-    <sep></sep>
-    <category name="example point">
-      <block type="inputquerystring1input">
-        <value name="moduleNameString">
-          <block type="typemodulenamestring">
-            <field name="valueModuleNameString">point</field>
-            <value name="NAME">
-              <block type="typequerystring">
-                <field name="type">integer</field>
-                <field name="NAME">id</field>
-              </block>
-            </value>
-          </block>
-        </value>
-        <statement name="NAME">
-          <block type="typemethod"></block>
-        </statement>
-        <statement name="inputFieldInput">
-          <block type="typefiedinput">
-            <value name="NAME">
-              <block type="typefield">
-                <field name="id">id</field>
-              </block>
-            </value>
-          </block>
-        </statement>
-        <statement name="typeElementInput">
-          <block type="elementpoint"></block>
-        </statement>
-        <statement name="typeOutputInput">
-          <block type="outputgeojson"></block>
-        </statement>
-      </block>
-    </category>
-  </xml>
+</xml>
 
-  <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+<xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
     <variables></variables>
-    <block type="inputquerystring1input" id="`47]SVt0Pj%H,PH,}ALI" x="13" y="12"></block>
-  </xml>
+</xml>
 
   <script>
       /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
@@ -156,20 +120,136 @@
           // Generate JavaScript code and display it.
           Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
           var code = Blockly.JavaScript.workspaceToCode(workspace);
-          alert(code);
+          console.log('code:', code);
       }
 
-      /* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
+      Blockly.JavaScript['typequerystring'] = function(block) {
+          var dropdown_type = block.getFieldValue('type');
+          var text_input_id = block.getFieldValue('input_id');
+          var value_valuequerystring = Blockly.JavaScript.valueToCode(block, 'valueQueryString', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '\ndropdown_type: ' + dropdown_type + ',\ntext_input_id: ' + text_input_id + ',\nvalue_valuequerystring: ' + value_valuequerystring + '\n';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
 
-      /* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
+      Blockly.JavaScript['inputquerystring1input'] = function(block) {
+          var value_modulenamestring = Blockly.JavaScript.valueToCode(block, 'moduleNameString', Blockly.JavaScript.ORDER_ATOMIC);
+          var statements_method = Blockly.JavaScript.statementToCode(block, 'method');
+          var statements_inputfieldinput = Blockly.JavaScript.statementToCode(block, 'inputFieldInput');
+          var statements_typeelementinput = Blockly.JavaScript.statementToCode(block, 'typeElementInput');
+          var statements_typeoutputinput = Blockly.JavaScript.statementToCode(block, 'typeOutputInput');
+          // TODO: Assemble JavaScript into code variable.
+          var code = value_modulenamestring + '\n';
+          return code;
+      };
+
+      Blockly.JavaScript['fieldinput'] = function(block) {
+          var dropdown_fieldname = block.getFieldValue('fieldName');
+          var dropdown_nametype = block.getFieldValue('nameType');
+          var value_query_field_input = Blockly.JavaScript.valueToCode(block, 'query_field_input', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typemodulenamestring'] = function(block) {
+          var text_valuemodulenamestring = block.getFieldValue('valueModuleNameString');
+          var value_module_name = Blockly.JavaScript.valueToCode(block, 'module_name', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '\n' + text_valuemodulenamestring + ': ' + value_module_name + '\n';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetagname'] = function(block) {
+          var text_valuetagname = block.getFieldValue('valueTagName');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetaghighway'] = function(block) {
+          var dropdown_tag_highway_type = block.getFieldValue('tag_highway_type');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typetagplace'] = function(block) {
+          var dropdown_tag_place_name = block.getFieldValue('tag_place_name');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefield'] = function(block) {
+          var text_id = block.getFieldValue('id');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefieldloc'] = function(block) {
+          var text_lng = block.getFieldValue('lng');
+          var text_lat = block.getFieldValue('lat');
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...';
+          // TODO: Change ORDER_NONE to the correct strength.
+          return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.JavaScript['typefiedinput'] = function(block) {
+          var value_query_simple_input = Blockly.JavaScript.valueToCode(block, 'query_simple_input', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typequeryandinput'] = function(block) {
+          var value_query_dual_input_1 = Blockly.JavaScript.valueToCode(block, 'query_dual_input_1', Blockly.JavaScript.ORDER_ATOMIC);
+          var value_query_dual_input_2 = Blockly.JavaScript.valueToCode(block, 'query_dual_input_2', Blockly.JavaScript.ORDER_ATOMIC);
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['elementpoint'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['outputgeojson'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['outputjson'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
+      Blockly.JavaScript['typemethod'] = function(block) {
+          // TODO: Assemble JavaScript into code variable.
+          var code = '...;\n';
+          return code;
+      };
+
       Blockly.Blocks['typequerystring'] = {
           init: function() {
               this.appendValueInput("valueQueryString")
                   .setCheck(["typeQueryString", "typeModuleNameStringValueInput"])
                   .appendField("type:")
                   .appendField(new Blockly.FieldDropdown([["int","integer"], ["float","float point"], ["string","text"], ["nearby","near by coordinates"], ["regex","regular expression"]]), "type")
-                  .appendField("name (letters only):")
-                  .appendField(new Blockly.FieldTextInput("id"), "NAME")
+                  .appendField("name:")
+                  .appendField(new Blockly.FieldTextInput("id"), "input_id")
                   .appendField("/");
               this.setInputsInline(false);
               this.setOutput(true, "typeQueryString");
@@ -184,7 +264,7 @@
               this.appendValueInput("moduleNameString")
                   .setCheck("typeModuleNameString")
                   .appendField("api.gosm.io/");
-              this.appendStatementInput("NAME")
+              this.appendStatementInput("method")
                   .setCheck(null)
                   .appendField("method:");
               this.appendStatementInput("inputFieldInput")
@@ -207,7 +287,7 @@
 
       Blockly.Blocks['fieldinput'] = {
           init: function() {
-              this.appendValueInput("NAME")
+              this.appendValueInput("query_field_input")
                   .setCheck(null)
                   .appendField("field:")
                   .appendField(new Blockly.FieldDropdown([["tag","tag"], ["id","id"], ["nearBy","nearBy"]]), "fieldName")
@@ -223,7 +303,7 @@
 
       Blockly.Blocks['typemodulenamestring'] = {
           init: function() {
-              this.appendValueInput("NAME")
+              this.appendValueInput("module_name")
                   .setCheck(["typeQueryString", "typeModuleNameString"])
                   .appendField(new Blockly.FieldTextInput("module_name"), "valueModuleNameString")
                   .appendField("/");
@@ -250,7 +330,7 @@
           init: function() {
               this.appendDummyInput()
                   .appendField("tag.highway:")
-                  .appendField(new Blockly.FieldDropdown([["primary","primary"], ["secondary","secondary"], ["residential","residential"]]), "NAME");
+                  .appendField(new Blockly.FieldDropdown([["primary","primary"], ["secondary","secondary"], ["residential","residential"]]), "tag_highway_type");
               this.setOutput(true, "typeTag");
               this.setColour(230);
               this.setTooltip("");
@@ -261,8 +341,8 @@
       Blockly.Blocks['typetagplace'] = {
           init: function() {
               this.appendDummyInput()
-                  .appendField("ta.place")
-                  .appendField(new Blockly.FieldDropdown([["square","square"], ["neighbourhood","neighbourhood"], ["suburb","suburb"], ["farm","farm"], ["village","village"], ["locality","locality"], ["hamlet","hamlet"]]), "NAME");
+                  .appendField("tag.place")
+                  .appendField(new Blockly.FieldDropdown([["square","square"], ["neighbourhood","neighbourhood"], ["suburb","suburb"], ["farm","farm"], ["village","village"], ["locality","locality"], ["hamlet","hamlet"]]), "tag_place_name");
               this.setOutput(true, "typeTag");
               this.setColour(230);
               this.setTooltip("");
@@ -298,7 +378,7 @@
 
       Blockly.Blocks['typefiedinput'] = {
           init: function() {
-              this.appendValueInput("NAME")
+              this.appendValueInput("query_simple_input")
                   .setCheck("typeField")
                   .appendField("query:");
               this.setInputsInline(false);
@@ -312,10 +392,10 @@
 
       Blockly.Blocks['typequeryandinput'] = {
           init: function() {
-              this.appendValueInput("NAME1")
+              this.appendValueInput("query_dual_input_1")
                   .setCheck(["typeField", "typeTag"])
                   .appendField("$and:");
-              this.appendValueInput("NAME2")
+              this.appendValueInput("query_dual_input_2")
                   .setCheck(["typeField", "typeTag"]);
               this.setInputsInline(false);
               this.setPreviousStatement(true, null);
@@ -370,7 +450,7 @@
       };
 
       // Inject workspace for minimap.
-      var minimapWorkspace = Blockly.inject('mapDiv',
+      /*var minimapWorkspace = Blockly.inject('mapDiv',
           {media: '../../media/',
               readOnly: true,
               zoom:
@@ -382,10 +462,9 @@
                   }});
 
       // Initilizing the minimap.
-      Minimap.init(workspace,minimapWorkspace);
-
+      Minimap.init(workspace,minimapWorkspace);*/
 
   </script>
-<button onclick="showCode()">Show JavaScript</button>
+    <button onclick="showCode()">Teste mapa</button><input type="text" value="{id: 273316}">
 </body>
 </html>
